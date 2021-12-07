@@ -4,12 +4,19 @@
  * Имеет свойство URL, равное '/user'.
  * */
 class User {
+  
+  static URL = '/user';
   /**
    * Устанавливает текущего пользователя в
    * локальном хранилище.
    * */
   static setCurrent(user) {
-
+    /* user = {
+  id: 12,
+  name: 'Vlad'
+}; */
+  localStorage.user = JSON.stringify(user);
+  console.log(localStorage.user);
   }
 
   /**
@@ -17,15 +24,32 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-
+    /* user = {
+  id: 12,
+  name: 'Vlad'
+} */
+  console.log(localStorage.user);
+  localStorage.removeItem('user');
+  console.log(localStorage.user);
   }
 
   /**
-   * Возвращает текущего авторизованного пользователя
+   * Возвращает ОБЪЕКТ текущего авторизованного пользователя
    * из локального хранилища
    * */
   static current() {
-
+    /* user = {
+      id: 12,
+      name: 'Vlad'
+    }; */
+    if (localStorage.user) {
+      const current = JSON.parse(localStorage.user);
+      console.log(current);
+      return current;
+    } else {
+      console.log(undefined);
+      return undefined;
+    }
   }
 
   /**
@@ -33,7 +57,7 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-
+    createRequest({url2: this.URL + '/current', method: 'GET', data: this.current(), callback});
   }
 
   /**
@@ -43,10 +67,19 @@ class User {
    * User.setCurrent.
    * */
   static login(data, callback) {
+    /* data = {
+      email: 'demo@demo',
+      password: 'demo'
+    } */ 
+    
+    // ??? Успешный ответ {"success":true,"user":{"name":"demo","email":"demo@demo","password":"demo","id":"1"}}
+    // Но ответ никак не связан со стораджем (id не добавился в сторадж). Полагаю, что ошибка в коллбэке, у меня он неизменный в createRequest.
+    // Как правильно мне переработать решение? Нужно начинать с createRequest? 
+    
     createRequest({
-      url: this.URL + '/login',
+      url2: this.URL + '/login',
       method: 'POST',
-      responseType: 'json',
+      // responseType: 'json',
       data,
       callback: (err, response) => {
         if (response && response.user) {

@@ -3,13 +3,32 @@
  * Имеет свойство URL, равно пустой строке.
  * */
 class Entity {
+  // static URL = '/account';
+  // static URL = '/transaction';
+  static URL = '';
   /**
    * Запрашивает с сервера список данных.
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback){
+    /*
+        Функция, которая сработает после запроса.
+        Если в процессе запроса произойдёт ошибка, её объект
+        должен быть в параметре err.
+        Если в запросе есть данные, они должны быть переданы в response.
+      */
+      /* callback: (err, response) => {
+        console.log( 'Ошибка, если есть', err );
+        console.log( 'Данные, если нет ошибки', response );
+      } */
 
+    /* data = {
+      mail: 'ivan@biz.pro',
+      password: 'odinodin'
+    }; */
+
+    createRequest({url2: this.URL, method: 'GET', data, callback}); 
   }
 
   /**
@@ -18,7 +37,15 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
+    // Для запроса счёта в url передавать '/account' Account
+    // Для запроса попытки транзакции в url передавать /transaction Transaction
 
+    
+    /* data = {
+      mail: 'ivan@biz.pro'
+    }; */
+
+    createRequest({url2: this.URL, method: 'PUT', data, callback}); 
   }
 
   /**
@@ -26,6 +53,16 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback ) {
-
+    createRequest({url2: this.URL, method: 'DELETE', data, callback}); 
   }
 }
+
+/* {
+  mail: 'ivan@biz.pro'
+} */
+
+
+/* {
+  mail: 'ivan@biz.pro',
+  password: 'odinodin'
+} */
