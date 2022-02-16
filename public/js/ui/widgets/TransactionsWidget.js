@@ -12,7 +12,12 @@ class TransactionsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (element) {
+      this.element = element;
+      this.registerEvents();
+    } else {
+      throw 'Элемент не выбран или не найден'; // ??? Нужно ли? См. App.initWidgets(). Там по умолчанию добавляется панель в конструктор
+    }
   }
   /**
    * Регистрирует обработчики нажатия на
@@ -21,6 +26,16 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
+    const incomeBtn = this.element.querySelector('.create-income-button');
+    incomeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      App.getModal('newIncome').open();
+    })
 
+    const expenseBtn = this.element.querySelector('.create-expense-button');
+    expenseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      App.getModal('newExpense').open();
+    })
   }
 }

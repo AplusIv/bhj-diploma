@@ -57,7 +57,44 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    createRequest({url2: this.URL + '/current', method: 'GET', data: this.current(), callback});
+
+    /* const user = {
+      id: 12,
+      name: 'Vlad'
+    }; */
+
+    /* (err, response) => {
+        if (err === 200) {
+          console.log(User.current());
+          if (response.success) {
+            console.log(response);
+            console.log(response.success);
+
+            User.setCurrent( response.user );
+            console.log(response.user);
+          } else {
+            console.log(response);
+            console.log(response.success);
+
+            console.log(User.unsetCurrent());
+            console.log(User.current());
+          }
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+          }
+        }
+     */
+
+
+    console.log(this.current());
+
+    const xhr = createRequest({
+      url2: this.URL + '/current', 
+      method: 'GET', 
+      callback
+      })
+    // createRequest({url2: this.URL + '/current', method: 'GET', data: this.current(), callback});
+    // createRequest({url2: this.URL + '/current', method: 'GET', data: {id: 12, name: 'Vlad'}, callback});
   }
 
   /**
@@ -72,21 +109,31 @@ class User {
       password: 'demo'
     } */ 
     
-    // ??? Успешный ответ {"success":true,"user":{"name":"demo","email":"demo@demo","password":"demo","id":"1"}}
-    // Но ответ никак не связан со стораджем (id не добавился в сторадж). Полагаю, что ошибка в коллбэке, у меня он неизменный в createRequest.
-    // Как правильно мне переработать решение? Нужно начинать с createRequest? 
-    
+        /* {
+      email: 'scranton@electricsity.us',
+      password: 'dundermifflin'
+    } */
+
+    /* (err, response) => {
+        if (err === 200) {
+          console.log(response);
+          if (response.success) {
+            console.log(response.success);
+            console.log(response.user);
+            User.setCurrent(response.user);
+            User.current();
+          }
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+        }
+      } */
+
     createRequest({
       url2: this.URL + '/login',
       method: 'POST',
       // responseType: 'json',
       data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        }
-        callback(err, response);
-      }
+      callback
     });
   }
 
@@ -97,7 +144,45 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
+    /* const data = {
+      name: 'Vlad',
+      email: 'test@test.ru',
+      password: 'abracadabra'
+    } */
 
+    /* {
+      name: 'Michael Scott',
+      email: 'scranton@electricsity.us',
+      password: 'dundermifflin'
+    } */
+
+    /* (err, response) => {
+      if (err === 200) {
+        console.log(response);
+         if (response.success) {
+           console.log(response.success);
+           console.log(response.user);
+           User.setCurrent(response.user);
+           User.current();
+         }
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+        }
+      } */
+
+    createRequest({
+      url2: this.URL + '/register',
+      method: 'POST',
+      // responseType: 'json',
+      data,
+      /* callback: (err, response) => {
+        if (response && response.user) {
+          User.setCurrent(response.user);
+        }
+        callback(err, response);
+      } */
+      callback
+    })
   }
 
   /**
@@ -105,6 +190,26 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
+    
+    createRequest({
+      url2: this.URL + '/logout',
+      method: 'POST',
+      // responseType: 'json',
+      callback
+    })
 
+    
+
+    /* (err, response) => {
+      if (err === 200) {
+        console.log(response);
+        if (response.success) {
+          console.log(response);
+          User.unsetCurrent();
+        } else{
+          console.log('Некого деавторизовывать')
+        }
+      }  
+    } */
   }
 }

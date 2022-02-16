@@ -33,6 +33,22 @@
     {
       "password": "odinodin",
       "id": "tpp9ozd83ckwcaib3w"
+    },
+    {
+      "name": "Oxlade",
+      "id": "tpp9ozd48okykbxr7z"
+    },
+    {
+      "name": "Michael Scott",
+      "email": "scranton@electricsity.us",
+      "password": "dundermifflin",
+      "id": "tpp9ozd1f8kykcpjs6"
+    },
+    {
+      "name": "Joey Tribbiani",
+      "email": "centralperk@nyc.us",
+      "password": "knicksrules",
+      "id": "tpp9ozdebwkz5u18kl"
     }
   ],
   "accounts": [
@@ -52,16 +68,79 @@
       "id": "3"
     },
     {
+      "name": "Тестовый счёт",
       "user_id": "1",
-      "id": "tpp9ozd1xgkwux352b"
+      "id": "tpp9ozd2jckzfqx6zo"
     },
     {
+      "name": "Тестовый счёт2",
       "user_id": "1",
-      "id": "tpp9ozd8xwkwuyvex6"
+      "id": "tpp9ozd7rgkzfs0xpl"
     },
     {
+      "name": "Тест 3",
       "user_id": "1",
-      "id": "tpp9ozd8f4kwuyxgs5"
+      "id": "tpp9ozd8hwkzfsio8y"
+    },
+    {
+      "name": "Тест 4",
+      "user_id": "1",
+      "id": "tpp9ozd8ugkzfsz6zc"
+    },
+    {
+      "name": "Тест 5",
+      "user_id": "1",
+      "id": "tpp9ozd55gkzft4ax5"
+    },
+    {
+      "name": "Тест 6",
+      "user_id": "1",
+      "id": "tpp9ozd8jskzft6xx2"
+    },
+    {
+      "name": "Тест 7",
+      "user_id": "1",
+      "id": "tpp9ozddp4kzftck3m"
+    },
+    {
+      "name": "Тест 0",
+      "user_id": "1",
+      "id": "tpp9ozd5agkzftn36x"
+    },
+    {
+      "name": "Тест 8",
+      "user_id": "1",
+      "id": "tpp9ozdehskzftop71"
+    },
+    {
+      "name": "Тест 9",
+      "user_id": "1",
+      "id": "tpp9ozd538kzftzqcq"
+    },
+    {
+      "name": "Тест 10",
+      "user_id": "1",
+      "id": "tpp9ozd12kkzfu1fo5"
+    },
+    {
+      "name": "Тест 11",
+      "user_id": "1",
+      "id": "tpp9ozd4fkkzfu3r97"
+    },
+    {
+      "name": "Тест 12",
+      "user_id": "1",
+      "id": "tpp9ozd1rskzfu8kho"
+    },
+    {
+      "name": "Тест 13",
+      "user_id": "1",
+      "id": "tpp9ozdeqskzfu9mz1"
+    },
+    {
+      "name": "Тест 14",
+      "user_id": "1",
+      "id": "tpp9ozdbokkzillbp4"
     }
   ],
   "transactions": [
@@ -199,6 +278,60 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "tpp9ozddz0kzljn4p4",
+      "type": "income",
+      "name": "Прилетело",
+      "sum": 1000,
+      "account_id": "tpp9ozd8ugkzfsz6zc",
+      "user_id": "1",
+      "created_at": "2022-02-13T17:30:45.255Z"
+    },
+    {
+      "id": "tpp9ozd3aokzlkxhhn",
+      "type": "expense",
+      "name": "Неудачные вложения",
+      "sum": 25000,
+      "account_id": "tpp9ozddp4kzftck3m",
+      "user_id": "1",
+      "created_at": "2022-02-13T18:06:48.010Z"
+    },
+    {
+      "id": "tpp9ozdcu8kzlkyya9",
+      "type": "income",
+      "name": "Мат помощь",
+      "sum": 15000,
+      "account_id": "tpp9ozd55gkzft4ax5",
+      "user_id": "1",
+      "created_at": "2022-02-13T18:07:56.432Z"
+    },
+    {
+      "id": "tpp9ozd3pokzll1agh",
+      "type": "income",
+      "name": "Мат помощь",
+      "sum": 5000,
+      "account_id": "tpp9ozd8hwkzfsio8y",
+      "user_id": "1",
+      "created_at": "2022-02-13T18:09:45.520Z"
+    },
+    {
+      "id": "tpp9ozd4pokzll3gus",
+      "type": "expense",
+      "name": "Долги",
+      "sum": 15000,
+      "account_id": "tpp9ozd12kkzfu1fo5",
+      "user_id": "1",
+      "created_at": "2022-02-13T18:11:27.123Z"
+    },
+    {
+      "id": "tpp9ozd36kkzpzt2ok",
+      "type": "income",
+      "name": "Премия",
+      "sum": 7000,
+      "account_id": "tpp9ozd8jskzft6xx2",
+      "user_id": "1",
+      "created_at": "2022-02-16T20:14:21.139Z"
     }
   ]
 }

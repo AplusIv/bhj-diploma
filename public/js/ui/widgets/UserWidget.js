@@ -12,7 +12,11 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-
+    if (element) {
+      this.element = element;
+    } else {
+      throw 'Элемент не выбран или не найден'; // ??? Ошибку выбрасываем через throw или по-другому задумывалось?
+    }
   }
 
   /**
@@ -23,6 +27,11 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update(){
-
+    // User.current();
+    const currentUser = User.current();
+    if(currentUser) {
+      document.querySelector('.user-name').innerText = currentUser.name;
+      console.log('Успешно обновил имя авторизованного пользователя');
+    }        
   }
 }

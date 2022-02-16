@@ -10,15 +10,23 @@ class TransactionsPage {
    * Сохраняет переданный элемент и регистрирует события
    * через registerEvents()
    * */
-  constructor( element ) {
+  constructor(element) {
+    if (element) {
+      this.element = element;
 
+      this.lastOptions; // Дополнительное свойство для сохранения данных options, переданных из App.showPage(pageName, options)
+
+      this.registerEvents();
+    } else {
+      throw 'Элемент не выбран или не найден'; // ??? Нужно ли? Смотри App.initPages(). Там по умолчанию добавляется .content-wrapper в конструктор (через App.content)
+    }
   }
 
   /**
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-
+    this.render(this.lastOptions);
   }
 
   /**
@@ -28,7 +36,21 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
+    const deleteAccountBtn = document.querySelector('.remove-account');
+    deleteAccountBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Под вопросом. Ссылки никакой нет
+      this.removeAccount();
+    })
 
+    const deleteTransactionBtn = document.querySelector('.transaction__remove');
+    if (deleteTransactionBtn) {
+      deleteTransactionBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Под вопросом. Ссылки никакой нет
+        this.removeTransaction(deleteTransactionBtn.dataset.id);
+      }) 
+      // ??? В этом обработчике нет никакого смысла... Думал, он будет навешиваться на элементы в процессе их создания и рендеринга, но ошибся.
+      // Пришлось крепить при рендеринге (метод renderTransactions(data)). Как правильнее?
+    }
   }
 
   /**
@@ -41,7 +63,26 @@ class TransactionsPage {
    * для обновления приложения
    * */
   removeAccount() {
+    if (this.lastOptions) {
+      console.log(this.lastOptions);
+      const question = confirm('Вы действительно хотите удалить счёт?');
+      if(question) {
+        Account.remove({id: this.lastOptions.account_id}, (err, response) => {
+          if (err === 200) {
+            console.log({id: this.lastOptions.account_id});
+            console.log(response);
 
+            this.clear(); // Очищаю страницу, удаляю записи со страницы о транзакциях, название счёта по умолчанию
+            // ??? Страница в итоге не очищается, как была отрисована, так и осталась.
+
+            App.updateWidgets();
+            App.updateForms();
+          } else {
+            console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+          }
+        })
+      }
+    }
   }
 
   /**
@@ -50,8 +91,26 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update(),
    * либо обновляйте текущую страницу (метод update) и виджет со счетами
    * */
-  removeTransaction( id ) {
+  removeTransaction(id) {    
+    let question = confirm('Вы действительно хотите удалить эту транзакцию?');
+    if (question) {
+      // this.registerEvents();
+      console.log(id);
+      Transaction.remove({id: id}, (err, response) => {
+        if (err === 200) {
+          console.log(response);
+          
+          // this.renderTransactions([]); // ??? Надо как-то очистить поле от счетов
 
+          App.update();
+
+          // this.update();
+          // App.updateWidgets();
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+        }
+      })
+    }
   }
 
   /**
@@ -60,8 +119,35 @@ class TransactionsPage {
    * Получает список Transaction.list и полученные данные передаёт
    * в TransactionsPage.renderTransactions()
    * */
-  render(options){
+  render(options) {
+    if (options) {
+      this.lastOptions = options; //options - объект с настройками вида {account_id: 3}, где account_id - идентификатор счёта
+      console.log(this.lastOptions);
 
+      // Получаю данные конкретного счёта
+      Account.get(options.account_id, (err, response) => {
+        if (err === 200) {
+          console.log(options);
+          console.log(options.account_id);
+          console.log(response);
+
+          this.renderTitle(response.data['name']);
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+        }
+      })
+
+      // Получаю список доходов и расходов пользователя по конкретному счёту 
+      Transaction.list(options, (err, response) => {
+        if (err === 200) {
+          console.log(response);
+
+          this.renderTransactions(response.data);
+        } else {
+          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
+        }
+      })
+    }
   }
 
   /**
@@ -70,37 +156,121 @@ class TransactionsPage {
    * Устанавливает заголовок: «Название счёта»
    * */
   clear() {
-
+    this.renderTransactions([]);
+    this.renderTitle('Название счёта');
+    this.lastOptions = '';
   }
 
   /**
    * Устанавливает заголовок в элемент .content-title
    * */
-  renderTitle(name){
-
+  renderTitle(name) {
+    document.querySelector('.content-title').textContent = name;
   }
 
   /**
    * Форматирует дату в формате 2019-03-10 03:20:41 (строка)
    * в формат «10 марта 2019 г. в 03:20»
    * */
-  formatDate(date){
+  formatDate(responseDate) {
+    const date = new Date(responseDate);
+    let month = '';
+    if (date.getMonth() === 0) {
+      month = 'января'
+    } else if (date.getMonth() === 1) {
+      month = 'февраля'
+    } else if (date.getMonth() === 2) {
+      month = 'марта'
+    } else if (date.getMonth() === 3) {
+      month = 'апреля'
+    } else if (date.getMonth() === 4) {
+      month = 'мая'
+    } else if (date.getMonth() === 5) {
+      month = 'июня'
+    } else if (date.getMonth() === 6) {
+      month = 'июля'
+    } else if (date.getMonth() === 7) {
+      month = 'августа'
+    } else if (date.getMonth() === 8) {
+      month = 'сентября'
+    } else if (date.getMonth() === 9) {
+      month = 'октября'
+    } else if (date.getMonth() === 10) {
+      month = 'ноября'
+    } else {
+      month = 'декабря'
+    }
 
+    return (date.getHours() < 10) ? `${date.getDate()} ${month} ${date.getFullYear()} г. в 0${date.getHours()}:${date.getMinutes()}` : `${date.getDate()} ${month} ${date.getFullYear()} г. в ${date.getHours()}:${date.getMinutes()}`
   }
 
   /**
    * Формирует HTML-код транзакции (дохода или расхода).
    * item - объект с информацией о транзакции
    * */
-  getTransactionHTML(item){
+  getTransactionHTML(item) {
+    const transaction = `
+    <div class="transaction transaction_${item.type} row">
+      <div class="col-md-7 transaction__details">
+        <div class="transaction__icon">
+          <span class="fa fa-money fa-2x"></span>
+        </div>      
+        <div class="transaction__info">
+          <h4 class="transaction__title">${item.name}</h4>
+          <div class="transaction__date">${this.formatDate(item.created_at)}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="transaction__summ">${item.sum}<span class="currency">₽</span></div>
+      </div>
+      <div class="col-md-2 transaction__controls">
+        <button class="btn btn-danger transaction__remove" data-id="${item.id}">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>\n`
+    return transaction;
 
+    // !!! Подкорректировать формат времени
   }
 
   /**
    * Отрисовывает список транзакций на странице
    * используя getTransactionHTML
    * */
-  renderTransactions(data){
+  renderTransactions(data) {
+    // this.clear();
+    
+    
+    let transactions = '';
+    for (let transaction of data) {
+      transactions += this.getTransactionHTML(transaction);
+    }
+    console.log(transactions);
+    const transactionsSection = this.element.querySelector('.content');
+    // transactionsSection.insertAdjacentHTML('beforeEnd', transactions);
+    const transactionsHtml = document.createElement('div');
+    transactionsSection.appendChild(transactionsHtml);
+    transactionsHtml.outerHTML = transactions;
 
+    // Вешаю обработчики вручную на вновь созданную разметку.
+    const deleteTransactionBtns = document.querySelectorAll('.transaction__remove');
+    
+    for (let deleteTransactionBtn of deleteTransactionBtns) {
+      /* deleteTransactionBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Под вопросом. Ссылки никакой нет
+        this.removeTransaction(deleteTransactionBtn.dataset.id);
+      }) */ // ??? Почему дважды вешает обработчик?
+      deleteTransactionBtn.onclick = (e) => {
+        e.preventDefault(); // Под вопросом. Ссылки никакой нет
+        this.removeTransaction(deleteTransactionBtn.dataset.id);
+      }
+    }
+    
+    
+
+    // console.log(transactionsSection);
+
+    // !!! Задваиваются данные, будто бы несколько запросов проводилось подряд
   }
 }
