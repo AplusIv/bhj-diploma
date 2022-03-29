@@ -13,6 +13,7 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor(element) {
+    // Для передачи element используется метод класса App initForms()
     if (element) {
       this.element = element;
       this.registerEvents();
@@ -28,7 +29,6 @@ class AsyncForm {
   registerEvents() {
     this.element.addEventListener('submit', (e) => {
       e.preventDefault();
-
       this.submit();
     })
   }
@@ -42,7 +42,6 @@ class AsyncForm {
    * */
   getData() {
     const formData = new FormData(this.element);
-    console.log(formData);
     
     const entries = formData.entries();
     const data = {};
@@ -53,9 +52,6 @@ class AsyncForm {
       const key = item[ 0 ],
       value = item[ 1 ];
       data[key] = value; // Заполняю новый объект парами ключ-значение из объекта formData
-      console.log(entries);
-      console.log( `${key}: ${value}` );
-      console.log(data);
     }
     return data;
   }
@@ -70,8 +66,6 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    console.log(this);
-    console.log(this.getData());
     const data = this.getData();
     this.onSubmit(data);
   }

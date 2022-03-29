@@ -12,7 +12,7 @@ class TransactionsPage {
    * */
   constructor(element) {
     if (element) {
-      this.element = element;
+      this.element = element; // <div class="content-wrapper">
 
       this.lastOptions; // Дополнительное свойство для сохранения данных options, переданных из App.showPage(pageName, options)
 
@@ -35,22 +35,21 @@ class TransactionsPage {
    * методами TransactionsPage.removeTransaction и
    * TransactionsPage.removeAccount соответственно
    * */
-  registerEvents() {
+  registerEvents() {    
     const deleteAccountBtn = document.querySelector('.remove-account');
     deleteAccountBtn.addEventListener('click', (e) => {
       e.preventDefault(); // Под вопросом. Ссылки никакой нет
       this.removeAccount();
-    })
+    });
 
-    const deleteTransactionBtn = document.querySelector('.transaction__remove');
-    if (deleteTransactionBtn) {
-      deleteTransactionBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Под вопросом. Ссылки никакой нет
+
+    this.element.querySelector('.content').addEventListener('click', (e) => {
+      e.preventDefault(); // Под вопросом. Ссылки никакой нет
+      const deleteTransactionBtn = e.target.closest('.transaction__remove');
+      if (deleteTransactionBtn) {
         this.removeTransaction(deleteTransactionBtn.dataset.id);
-      }) 
-      // ??? В этом обработчике нет никакого смысла... Думал, он будет навешиваться на элементы в процессе их создания и рендеринга, но ошибся.
-      // Пришлось крепить при рендеринге (метод renderTransactions(data)). Как правильнее?
-    }
+      }
+    });   
   }
 
   /**
@@ -64,13 +63,10 @@ class TransactionsPage {
    * */
   removeAccount() {
     if (this.lastOptions) {
-      console.log(this.lastOptions);
       const question = confirm('Вы действительно хотите удалить счёт?');
       if(question) {
         Account.remove({id: this.lastOptions.account_id}, (err, response) => {
           if (err === 200) {
-            console.log({id: this.lastOptions.account_id});
-            console.log(response);
 
             this.clear(); // Очищаю страницу, удаляю записи со страницы о транзакциях, название счёта по умолчанию
             // ??? Страница в итоге не очищается, как была отрисована, так и осталась.
@@ -94,12 +90,8 @@ class TransactionsPage {
   removeTransaction(id) {    
     let question = confirm('Вы действительно хотите удалить эту транзакцию?');
     if (question) {
-      // this.registerEvents();
-      console.log(id);
       Transaction.remove({id: id}, (err, response) => {
-        if (err === 200) {
-          console.log(response);
-          
+        if (err === 200) {          
           // this.renderTransactions([]); // ??? Надо как-то очистить поле от счетов
 
           App.update();
@@ -122,15 +114,9 @@ class TransactionsPage {
   render(options) {
     if (options) {
       this.lastOptions = options; //options - объект с настройками вида {account_id: 3}, где account_id - идентификатор счёта
-      console.log(this.lastOptions);
-
       // Получаю данные конкретного счёта
       Account.get(options.account_id, (err, response) => {
         if (err === 200) {
-          console.log(options);
-          console.log(options.account_id);
-          console.log(response);
-
           this.renderTitle(response.data['name']);
         } else {
           console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
@@ -140,8 +126,6 @@ class TransactionsPage {
       // Получаю список доходов и расходов пользователя по конкретному счёту 
       Transaction.list(options, (err, response) => {
         if (err === 200) {
-          console.log(response);
-
           this.renderTransactions(response.data);
         } else {
           console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
@@ -246,31 +230,12 @@ class TransactionsPage {
     for (let transaction of data) {
       transactions += this.getTransactionHTML(transaction);
     }
-    console.log(transactions);
+    // console.log(transactions);
     const transactionsSection = this.element.querySelector('.content');
     // transactionsSection.insertAdjacentHTML('beforeEnd', transactions);
     const transactionsHtml = document.createElement('div');
     transactionsSection.appendChild(transactionsHtml);
     transactionsHtml.outerHTML = transactions;
-
-    // Вешаю обработчики вручную на вновь созданную разметку.
-    const deleteTransactionBtns = document.querySelectorAll('.transaction__remove');
-    
-    for (let deleteTransactionBtn of deleteTransactionBtns) {
-      /* deleteTransactionBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Под вопросом. Ссылки никакой нет
-        this.removeTransaction(deleteTransactionBtn.dataset.id);
-      }) */ // ??? Почему дважды вешает обработчик?
-      deleteTransactionBtn.onclick = (e) => {
-        e.preventDefault(); // Под вопросом. Ссылки никакой нет
-        this.removeTransaction(deleteTransactionBtn.dataset.id);
-      }
-    }
-    
-    
-
-    // console.log(transactionsSection);
-
-    // !!! Задваиваются данные, будто бы несколько запросов проводилось подряд
+    // ??? Задваиваются данные, будто бы несколько запросов проводилось подряд
   }
 }

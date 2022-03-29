@@ -3,8 +3,6 @@
  * Имеет свойство URL, равно пустой строке.
  * */
 class Entity {
-  // static URL = '/account';
-  // static URL = '/transaction';
   static URL = '';
   /**
    * Запрашивает с сервера список данных.
@@ -18,38 +16,8 @@ class Entity {
         должен быть в параметре err.
         Если в запросе есть данные, они должны быть переданы в response.
       */
-      /* callback: (err, response) => {
-        console.log( 'Ошибка, если есть', err );
-        console.log( 'Данные, если нет ошибки', response );
-      } */
-
-      /* (err, response) => {
-        if (err === 200) {
-          console.log(response);
-        } else {
-          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
-        }
-      } */
-
-    /* data = {
-      mail: 'ivan@biz.pro',
-      password: 'odinodin'
-    }; */
-
     createRequest({url2: this.URL, method: 'GET', data, callback}); 
   }
-
-  /* Entity.list({
-    mail: 'ivan@biz.pro',
-    password: 'odinodin'
-  }, function(err, response) {
-    if (err === 200) {
-      console.log(`Загружено: ${JSON.stringify(response)}`);
-      console.log(response);
-    } else {
-      console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
-    }    
-  }) */
 
   /**
    * Создаёт счёт или доход/расход с помощью запроса
@@ -59,20 +27,6 @@ class Entity {
   static create(data, callback) {
     // Для запроса счёта в url передавать '/account' Account
     // Для запроса попытки транзакции в url передавать /transaction Transaction
-
-    /* (err, response) => {
-        if (err === 200) {
-          console.log(response);
-        } else {
-          console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
-        }
-      } */
-
-
-    /* data = {
-      mail: 'ivan@biz.pro'
-    }; */
-
     createRequest({url2: this.URL, method: 'PUT', data, callback}); 
   }
 
@@ -85,12 +39,3 @@ class Entity {
   }
 }
 
-/* {
-  mail: 'ivan@biz.pro'
-} */
-
-
-/* {
-  mail: 'ivan@biz.pro',
-  password: 'odinodin'
-} */

@@ -31,7 +31,6 @@ class UserWidget {
     const currentUser = User.current();
     if(currentUser) {
       document.querySelector('.user-name').innerText = currentUser.name;
-      console.log('Успешно обновил имя авторизованного пользователя');
     }        
   }
 }

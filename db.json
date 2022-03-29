@@ -49,6 +49,24 @@
       "email": "centralperk@nyc.us",
       "password": "knicksrules",
       "id": "tpp9ozdebwkz5u18kl"
+    },
+    {
+      "name": "Nikki Sixx",
+      "email": "motley@crue.com",
+      "password": "rocknroll",
+      "id": "tpp9ozd8ggl19tbi7t"
+    },
+    {
+      "name": "Vince Neil",
+      "email": "motleyfckn@crue.com",
+      "password": "rocknroll",
+      "id": "tpp9ozd93kl19tovot"
+    },
+    {
+      "name": "Mick Mars",
+      "email": "motleycrue@rocks.com",
+      "password": "rocknroll",
+      "id": "tpp9ozde58l19u1vef"
     }
   ],
   "accounts": [
@@ -68,16 +86,6 @@
       "id": "3"
     },
     {
-      "name": "Тестовый счёт",
-      "user_id": "1",
-      "id": "tpp9ozd2jckzfqx6zo"
-    },
-    {
-      "name": "Тестовый счёт2",
-      "user_id": "1",
-      "id": "tpp9ozd7rgkzfs0xpl"
-    },
-    {
       "name": "Тест 3",
       "user_id": "1",
       "id": "tpp9ozd8hwkzfsio8y"
@@ -93,19 +101,9 @@
       "id": "tpp9ozd55gkzft4ax5"
     },
     {
-      "name": "Тест 6",
-      "user_id": "1",
-      "id": "tpp9ozd8jskzft6xx2"
-    },
-    {
       "name": "Тест 7",
       "user_id": "1",
       "id": "tpp9ozddp4kzftck3m"
-    },
-    {
-      "name": "Тест 0",
-      "user_id": "1",
-      "id": "tpp9ozd5agkzftn36x"
     },
     {
       "name": "Тест 8",
@@ -128,19 +126,19 @@
       "id": "tpp9ozd4fkkzfu3r97"
     },
     {
-      "name": "Тест 12",
-      "user_id": "1",
-      "id": "tpp9ozd1rskzfu8kho"
-    },
-    {
-      "name": "Тест 13",
-      "user_id": "1",
-      "id": "tpp9ozdeqskzfu9mz1"
-    },
-    {
       "name": "Тест 14",
       "user_id": "1",
       "id": "tpp9ozdbokkzillbp4"
+    },
+    {
+      "name": "Тест 15",
+      "user_id": "1",
+      "id": "tpp9ozdbc4l19xu8k1"
+    },
+    {
+      "name": "Тест 6",
+      "user_id": "1",
+      "id": "tpp9ozdey4l1b9dpdw"
     }
   ],
   "transactions": [
@@ -280,15 +278,6 @@
       "user_id": "1"
     },
     {
-      "id": "tpp9ozddz0kzljn4p4",
-      "type": "income",
-      "name": "Прилетело",
-      "sum": 1000,
-      "account_id": "tpp9ozd8ugkzfsz6zc",
-      "user_id": "1",
-      "created_at": "2022-02-13T17:30:45.255Z"
-    },
-    {
       "id": "tpp9ozd3aokzlkxhhn",
       "type": "expense",
       "name": "Неудачные вложения",
@@ -323,15 +312,6 @@
       "account_id": "tpp9ozd12kkzfu1fo5",
       "user_id": "1",
       "created_at": "2022-02-13T18:11:27.123Z"
-    },
-    {
-      "id": "tpp9ozd36kkzpzt2ok",
-      "type": "income",
-      "name": "Премия",
-      "sum": 7000,
-      "account_id": "tpp9ozd8jskzft6xx2",
-      "user_id": "1",
-      "created_at": "2022-02-16T20:14:21.139Z"
     }
   ]
 }

@@ -13,10 +13,10 @@ class TransactionsWidget {
    * */
   constructor( element ) {
     if (element) {
-      this.element = element;
+      this.element = element; // document.querySelector(".transactions-panel")
       this.registerEvents();
     } else {
-      throw 'Элемент не выбран или не найден'; // ??? Нужно ли? См. App.initWidgets(). Там по умолчанию добавляется панель в конструктор
+      throw 'Элемент не выбран или не найден'; 
     }
   }
   /**
