@@ -18,7 +18,7 @@ class TransactionsPage {
 
       this.registerEvents();
     } else {
-      throw 'Элемент не выбран или не найден'; // ??? Нужно ли? Смотри App.initPages(). Там по умолчанию добавляется .content-wrapper в конструктор (через App.content)
+      throw 'Элемент не выбран или не найден'; 
     }
   }
 
@@ -69,7 +69,6 @@ class TransactionsPage {
           if (err === 200) {
 
             this.clear(); // Очищаю страницу, удаляю записи со страницы о транзакциях, название счёта по умолчанию
-            // ??? Страница в итоге не очищается, как была отрисована, так и осталась.
 
             App.updateWidgets();
             App.updateForms();
@@ -92,10 +91,7 @@ class TransactionsPage {
     if (question) {
       Transaction.remove({id: id}, (err, response) => {
         if (err === 200) {          
-          // this.renderTransactions([]); // ??? Надо как-то очистить поле от счетов
-
           App.update();
-
           // this.update();
           // App.updateWidgets();
         } else {
@@ -222,20 +218,14 @@ class TransactionsPage {
    * Отрисовывает список транзакций на странице
    * используя getTransactionHTML
    * */
-  renderTransactions(data) {
-    // this.clear();
-    
-    
+  renderTransactions(data) { 
     let transactions = '';
     for (let transaction of data) {
       transactions += this.getTransactionHTML(transaction);
     }
-    // console.log(transactions);
+
     const transactionsSection = this.element.querySelector('.content');
-    // transactionsSection.insertAdjacentHTML('beforeEnd', transactions);
-    const transactionsHtml = document.createElement('div');
-    transactionsSection.appendChild(transactionsHtml);
-    transactionsHtml.outerHTML = transactions;
-    // ??? Задваиваются данные, будто бы несколько запросов проводилось подряд
+    transactionsSection.innerHTML = ''; // Теперь данные не задваиваюся.
+    transactionsSection.insertAdjacentHTML('beforeEnd', transactions);
   }
 }

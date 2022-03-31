@@ -111,11 +111,6 @@
       "id": "tpp9ozdehskzftop71"
     },
     {
-      "name": "Тест 9",
-      "user_id": "1",
-      "id": "tpp9ozd538kzftzqcq"
-    },
-    {
       "name": "Тест 10",
       "user_id": "1",
       "id": "tpp9ozd12kkzfu1fo5"
@@ -139,6 +134,11 @@
       "name": "Тест 6",
       "user_id": "1",
       "id": "tpp9ozdey4l1b9dpdw"
+    },
+    {
+      "name": "Копилка",
+      "user_id": "tpp9ozdebwkz5u18kl",
+      "id": "b4ol1e1dqyl"
     }
   ],
   "transactions": [
@@ -312,6 +312,24 @@
       "account_id": "tpp9ozd12kkzfu1fo5",
       "user_id": "1",
       "created_at": "2022-02-13T18:11:27.123Z"
+    },
+    {
+      "id": "tpp9ozd96kl1e1eg6p",
+      "type": "income",
+      "name": "Занял у Чендлера",
+      "sum": 15000,
+      "account_id": "b4ol1e1dqyl",
+      "user_id": "tpp9ozdebwkz5u18kl",
+      "created_at": "2022-03-30T20:45:08.592Z"
+    },
+    {
+      "id": "tpp9ozd4g0l1e1hp8e",
+      "type": "expense",
+      "name": "Отдал долг Росу",
+      "sum": 10000,
+      "account_id": "b4ol1e1dqyl",
+      "user_id": "tpp9ozdebwkz5u18kl",
+      "created_at": "2022-03-30T20:47:40.285Z"
     }
   ]
 }

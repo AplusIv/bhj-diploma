@@ -13,8 +13,6 @@ class CreateAccountForm extends AsyncForm {
     // !!! Проверить корректность
     Account.create(data, (err, response) => {
       if (err === 200) {
-        console.log(response);
-        
         // console.log(this.element); // element указывает на form #new-account-form
 
         if (!response.success) {

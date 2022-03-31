@@ -48,7 +48,6 @@ class Modal {
    * со значением «block»
    * */
   open() {    
-    // ??? Нужно добавлять инлайновые стили? Или можно как-то css через js иначе поменять? 
     this.element.style.display = 'block';
   }
   /**

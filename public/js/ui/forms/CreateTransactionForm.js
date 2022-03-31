@@ -19,22 +19,14 @@ class CreateTransactionForm extends AsyncForm {
   renderAccountsList() {    
     Account.list(User.current(), (err, response) => {
       if (err === 200) {
+
         let accountsList = '';
         for (let account of response.data) {
           accountsList += `<option value="${account.id}">${account.name}</option>\n`
         }
 
-        // console.log(accountsList);
-
-        // ??? Почему-то добавляет 4 раза данные из запроса в селект. Не могу разобраться, с чем это связано
-
-
-        // console.log(this.element.querySelector('[name="account_id"]'));
-        // this.element.querySelector('[name="account_id"]').insertAdjacentHTML('beforeEnd', accountsList);
-
-        let selectElements = document.createElement('DIV'); // Пришлось делать через добавление пустого элемента в качестве потомка, потом менять его HTML
-        this.element.querySelector('[name="account_id"]').appendChild(selectElements);
-        selectElements.outerHTML = accountsList;
+        this.element.querySelector('[name="account_id"]').innerHTML = '';
+        this.element.querySelector('[name="account_id"]').insertAdjacentHTML('beforeEnd', accountsList); 
       } else {
         console.log(`Наконец-то всё сломалось, статус ошибки ${err}`);
       }
@@ -48,13 +40,11 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(data) {
-    // !!! Проверить корректность
-    
     // this.element указывает на форму #new-income-form. Смотри App.initForms()    
     Transaction.create(data, (err, response) => {
       console.log(data);
       if (err === 200) {
-        console.log(this.element); // element указывает на form #new-income-form
+        // console.log(this.element); // element указывает на form #new-income-form
 
         if (!response.success) {
           alert(response.error);
